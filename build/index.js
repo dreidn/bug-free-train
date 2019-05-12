@@ -30,24 +30,26 @@ function hello(word = world) {
     return `Hello ${word}!`;
 }
 exports.hello = hello;
-let f = function (c, z) {
-    return z.mul(z).add(c);
-};
-const THRESHOLD = 30;
-const C = new Complex(.01, .02);
-let Z = new Complex(0, 0);
-const pixels = new Map();
-let getConvergence = function (Z, C, iterations = 30) {
-    // let converge = 0;
-    for (let i = 0; i < iterations; i++) {
-        console.log(Z.toString());
-        Z = f(C, Z);
-        if (Z.magnitude() > THRESHOLD) {
-            return false;
-        }
-    }
-    return true;
-};
+// let f: (c: Complex, z: Complex) => Complex =
+//     function (c, z) {
+//         return z.mul(z).add(c);
+//     }
+// const THRESHOLD = 30;
+// const C = new Complex(.01, .02);
+// let Z = new Complex(0, 0);
+// const pixels = new Map();
+// let getConvergence: (Z: Complex, C: Complex, iterations: number) => boolean =
+//     function (Z, C, iterations = 30) {
+//         // let converge = 0;
+//         for (let i = 0; i < iterations; i++) {
+//             console.log(Z.toString());
+//             Z = f(C, Z);
+//             if (Z.magnitude() > THRESHOLD) {
+//                 return false;
+//             }
+//         }
+//         return true;
+//     }
 const stream = (min, max, width, height) => new ReadableStream({
     start(controller) {
         let _a = min;
@@ -80,6 +82,7 @@ const onNext = (reader) => (next) => {
         console.log("COMPLESE");
         return;
     }
+    //asdf
     console.log(next.value.toString());
     return reader.read().then(onNext(reader));
 };

@@ -8,14 +8,14 @@
     "lint": "./node_modules/.bin/tslint",
     "watch": "./node_modules/.bin/tsc -w"
   },
-  "dependencies": {
-    "tslint-config-airbnb": "^5.11.1",
-    "webpack": "^4.31.0",
-    "webpack-dev-server": "^3.3.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "ts-loader": "^6.0.0",
     "tslint": "^5.16.0",
-    "typescript": "^3.4.5"
+    "tslint-config-airbnb": "^5.11.1",
+    "typescript": "^3.4.5",
+    "webpack": "^4.31.0",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.3.1"
   }
 }

@@ -1,7 +1,7 @@
 const world = '🗺️';
 
 class Complex {
-    //a + bi
+
     a: number;
     b: number;
     constructor(a: number, b: number) {
@@ -32,32 +32,32 @@ export function hello(word: string = world): string {
     return `Hello ${word}!`;
 }
 
-let f: (c: Complex, z: Complex) => Complex =
-    function (c, z) {
-        return z.mul(z).add(c);
-    }
+// let f: (c: Complex, z: Complex) => Complex =
+//     function (c, z) {
+//         return z.mul(z).add(c);
+//     }
 
-const THRESHOLD = 30;
+// const THRESHOLD = 30;
 
-const C = new Complex(.01, .02);
-let Z = new Complex(0, 0);
+// const C = new Complex(.01, .02);
+// let Z = new Complex(0, 0);
 
-const pixels = new Map();
+// const pixels = new Map();
 
-let getConvergence: (Z: Complex, C: Complex, iterations: number) => boolean =
-    function (Z, C, iterations = 30) {
-        // let converge = 0;
+// let getConvergence: (Z: Complex, C: Complex, iterations: number) => boolean =
+//     function (Z, C, iterations = 30) {
+//         // let converge = 0;
 
-        for (let i = 0; i < iterations; i++) {
-            console.log(Z.toString());
-            Z = f(C, Z);
-            if (Z.magnitude() > THRESHOLD) {
-                return false;
-            }
-        }
+//         for (let i = 0; i < iterations; i++) {
+//             console.log(Z.toString());
+//             Z = f(C, Z);
+//             if (Z.magnitude() > THRESHOLD) {
+//                 return false;
+//             }
+//         }
 
-        return true;
-    }
+//         return true;
+//     }
 
 
 const stream = (min: number, max: number, width: number, height: number) => new ReadableStream({
@@ -94,7 +94,7 @@ const onNext = (reader: any) => (next: any) => {
         console.log("COMPLESE");
         return;
     }
-
+    //asdf
     console.log(next.value.toString());
 
     return reader.read().then(onNext(reader));

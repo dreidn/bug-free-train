@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    entry: './src/index.ts',
+    entry: './build/index.js',
     mode: "development",
 
     module: {
@@ -9,13 +9,13 @@ module.exports = {
             {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
-                exclue: /node_modules/
+                exclude: /node_modules/
             }
         ]
     },
 
     resolve: {
-        extensions: ['.tsx', '.ts', 'js']
+        extensions: ['js']
     },
 
     output: {
@@ -23,6 +23,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
     },
 
+    devtool: 'inline-source-map',
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
         compress: true,
