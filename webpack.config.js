@@ -1,32 +1,46 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: './build/index.js',
-    mode: "development",
+  entry: './build/src/index.js',
+  mode: "development",
 
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: /node_modules/
-            }
-        ]
-    },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'awesome-typescript-loader',
+        exclude: /node_modules/
+      },
+      { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
+    ]
+  },
 
-    resolve: {
-        extensions: ['js']
-    },
+  resolve: {
+    extensions: ['.ts', '.js', '.tsx', '.json']
+  },
 
-    output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist')
-    },
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist')
+  },
 
-    devtool: 'inline-source-map',
-    devServer: {
-        contentBase: path.join(__dirname, 'dist'),
-        compress: true,
-        port: 8080
-    }
+  devtool: 'source-map',
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 8080
+  },
+
+  externals: {
+    "react": "React",
+    "react-dom": "ReactDOM"
+  },
+
+  plugins: [
+    new HtmlWebpackPlugin({
+      hash: true,
+      filename: 'index.html'
+    })
+  ]
 }
