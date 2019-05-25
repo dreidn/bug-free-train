@@ -8,6 +8,9 @@
     "target": "es6",
     "jsx": "react",
     "sourceMap": true,
+    "lib": [
+      "DOM"
+    ]
   },
   "include": [
     "src/**/*.ts",

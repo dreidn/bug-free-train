@@ -1,5 +1,10 @@
+// import Canvas from './canvas';
+
 const world = '🗺️';
 
+/**
+ * Class for representing a complex number
+ */
 class Complex {
   a: number;
   b: number;
@@ -37,74 +42,99 @@ export function hello(word: string = world): string {
   return `Hello ${word}!`;
 }
 
-const f: (c: Complex, z: Complex) => Complex = (c, z) => {
+const P: (c: Complex, z: Complex) => Complex = (c, z) => {
   return z.mul(z).add(c);
 };
 
-const THRESHOLD = 30;
 
-const C = new Complex(0.01, 0.02);
-const Z = new Complex(0, 0);
 
+/**
+ * Calculate convergence for two complex numbers. This is the number
+ * of iterations required to reach the threshold. -1 means the threshold was not
+ * reached.
+ * @param Z 
+ * @param C 
+ * @param iterations 
+ * @param threshold 
+ */
 const getConvergence: (
   Z: Complex,
   C: Complex,
-  iterations?: number
-) => boolean = (Z, C, iterations = 30) => {
-  // let converge = 0;
+  iterations?: number,
+  threshold?: number
+) => number = (Z, C, iterations = 30, threshold = 2) => {
+  let converge = 0;
 
-  for (let i = 0; i < iterations; i++) {
-    console.log(Z.toString());
-    Z = f(C, Z);
-    if (Z.magnitude() > THRESHOLD) {
-      return false;
+  while (converge < iterations && Z.magnitude() <= 2) {
+    Z = P(C, Z);
+    converge += 1;
+  }
+
+  return converge === iterations ?
+    -1
+    :
+    converge;
+};
+
+/**
+ * I
+ * @param min 
+ * @param max 
+ * @param width 
+ * @param height 
+ */
+const t = (min = -2, max = 2, width: number, height: number) => {
+  const _a = min;
+  const _b = min;
+
+  const deltaA = (max - min) / width;
+  const deltaB = (max - min) / height;
+
+  const m = new Map();
+
+  for (let i = 0; i < width; i++) {
+    for (let j = 0; j < height; j++) {
+      const convergence = getConvergence(
+        new Complex(0, 0),
+        new Complex(i * deltaA, j * deltaB)
+      );
+      m.set([i, j], convergence);
     }
   }
 
-  return true;
+  return m;
 };
 
+const convergenceToColor = new Map([
+  [0, [0, 0, 0]],
+  [1, [75, 137, 237]], //lightish blue
+  [2, [75, 237, 234]], //teal
+  [3, [118, 237, 75]], //green
+  [4, [229, 237, 75]],//yellow
+  [5, [237, 156, 75]],//orange
+  [6, [237, 89, 75]],//salmon
+  [7, [237, 75, 167]], //pink
+  [8, [207, 75, 237]], //purple
+  [9, [94, 75, 237]], //bluer purple
+  [10, [127, 237, 75]], // a green
+]);
+
+const getColorMap = (cMap: Map<number[], number>) => {
+  const rgb = new Map();
+
+  cMap.forEach((v, k) => {
+    const color = convergenceToColor.has(v) ?
+      convergenceToColor.get(v)
+      :
+      [0, 0, 0];
+    rgb.set(k, color);
+  });
+
+  return rgb;
+};
+
+
+const C = new Complex(5, 3);
+const Z = new Complex(0, 0);
 console.log(getConvergence(Z, C));
-// const stream = (min: number, max: number, width: number, height: number) => new ReadableStream({
-//     start(controller) {
-//         let _a = min;
-//         let _b = min;
-//         let delta_a = (max - min) / width;
-//         let delta_b = (max - min) / height;
-
-//         const push = () => {
-//             if (_a > max && _b > max) {
-//                 controller.close();
-//                 return;
-//             } else if (_a > max) {
-//                 controller.enqueue(new Complex(max, _b))
-//             } else if (_b > max) {
-//                 controller.enqueue(new Complex(_a, max))
-//             } else {
-//                 controller.enqueue(new Complex(_a, _b));
-//             }
-
-//             _a += delta_a;
-//             _b += delta_b;
-
-//             push();
-//         }
-
-//         push();
-//     }
-// })
-
-// const onNext = (reader: any) => (next: any) => {
-//     if (next.done) {
-//         console.log("COMPLESE");
-//         return;
-//     }
-//     //asdf
-//     console.log(next.value.toString());
-
-//     return reader.read().then(onNext(reader));
-// }
-
-// const reader = stream(100, 100, 100, 100).getReader();
-// const parseStreamrResult = onNext(reader);
-// reader.read().then(parseStreamrResult);
+console.log(t(0, 10, 10, 10));
