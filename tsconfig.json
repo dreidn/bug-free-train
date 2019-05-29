@@ -9,7 +9,8 @@
     "jsx": "react",
     "sourceMap": true,
     "lib": [
-      "DOM"
+      "dom",
+      "es2015"
     ]
   },
   "include": [
